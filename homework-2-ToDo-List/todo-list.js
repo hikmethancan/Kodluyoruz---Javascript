@@ -13,22 +13,27 @@ list.addEventListener('click', function (check) {
     // delete elements
     if (check.target.className === "close") {
       check.target.parentElement.remove()
-      let value = check.target.parentElement.firstChild.nextElemetsibling.textContent.trim()
+      let value = check.target.parentElement.firstElementChild.innerHTML;
       dltStorage(value);
 
     }
 })
-// Kayıt sil
+// KayÄ±t sil
 function dltStorage(prm) {
   let toDo = getStorage()
   toDo.forEach((element, id) => {
+      console.log(element, id);
       if (element === prm) {
           toDo.splice(id, 1);
       }
   })
-  localStorage.setItem("todo", JSON.stringify(toDo))
+  localStorage.setItem("toDo", JSON.stringify(toDo))
 }
 
+function getStorage() {
+    let todo = JSON.parse(localStorage.getItem("toDo"))
+    return todo
+  }
 
 // main function to create new element
 function newElement() {
@@ -74,11 +79,6 @@ function loadStorage(prm) {
   localStorage.setItem("toDo", JSON.stringify(toDoInfo))
 }
 
-function getStorage() {
-  let todo = JSON.parse(localStorage.getItem("toDo"))
-  return todo
-}
-
 // if we have values in localStorage  show us when we reload the page
 function loadedPage() {
   let toDo = getStorage();
@@ -88,18 +88,10 @@ function loadedPage() {
       for (let i = 0; i < toDo.length; i++) {
           html = `<li>
           <span class="value">${toDo[i]}</span>
-          <span class="close">X</span>
+          <span class="close">\u00D7</span>
           </li>`
           listDOM.innerHTML += html
       }
   }
 }
 loadedPage()
-
-
-
-
-
-
-
-
